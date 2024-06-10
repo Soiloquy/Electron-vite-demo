@@ -1,10 +1,7 @@
-import { app, protocol,BrowserWindow } from 'electron'
-import path from 'path'
-import { fileURLToPath } from 'url'
+const { app, protocol,BrowserWindow } = require('electron')
+const path = require('path')
+require('./controller/getSource.js')
 
-// ES不支持 require, exports, module.exports,__filename, __dirname
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 // 注册特殊协议
 protocol.registerSchemesAsPrivileged([
@@ -19,7 +16,7 @@ const createWindow = async() => {
     minWidth:400,
 
     webPreferences:{
-      preload:path.resolve(__dirname,'./preload/index.ts')
+      preload:path.resolve(__dirname,'./preload/index.ts'),
     },
 
     show:false
@@ -31,6 +28,7 @@ const createWindow = async() => {
   win.on('ready-to-show',()=>{
     win.show()
   })
+
 }
 
 app.whenReady().then(() => {

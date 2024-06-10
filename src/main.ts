@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 
-import router from '@/router'
+import router from './router'
 
 const app=createApp(App)
 
