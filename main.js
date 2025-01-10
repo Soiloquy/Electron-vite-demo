@@ -1,7 +1,14 @@
 const { app, protocol,BrowserWindow } = require('electron')
 const path = require('path')
-require('./controller/getSource.js')
+const WinState=require('electron-win-state').default
 
+require('./controller/getSource.js')
+require('./controller/openNewBrowser.js')
+
+const winState=new WinState({
+  defaultHeight:600,
+  defaultWidth:800
+})
 
 // 注册特殊协议
 protocol.registerSchemesAsPrivileged([
@@ -10,12 +17,15 @@ protocol.registerSchemesAsPrivileged([
 
 const createWindow = async() => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    // 保存窗口状态
+    ...winState.winOptions,
+    // width: 800,
+    // height: 600,
     minHeight:600,
     minWidth:400,
 
     webPreferences:{
+      // 预加载
       preload:path.resolve(__dirname,'./preload/index.ts'),
     },
 
@@ -25,14 +35,20 @@ const createWindow = async() => {
   win.loadURL('http://localhost:5173/')
   win.webContents.openDevTools()
 
+  // 暂时关闭安全警告
+  process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+
+
   win.on('ready-to-show',()=>{
     win.show()
   })
 
+  winState.manage(win)
 }
 
 app.whenReady().then(() => {
   createWindow()
+  
   app.on('activate', () => {
     // 在 macOS 系统内, 如果没有已开启的应用窗口
     // 点击托盘图标时通常会重新创建一个新窗口

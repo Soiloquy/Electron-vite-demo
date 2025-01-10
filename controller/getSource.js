@@ -16,14 +16,21 @@ const getSource=(url)=>{
             const title=win.getTitle()
             try {
                 const image=await win.webContents.capturePage()
-                const screenshot=image.toDataURL()
-                resolve({
-                    title,
-                    screenshot,
-                    url
-                })
+                if (image.isEmpty()) {
+                    resolve({
+                        msg:'500'
+                    })
+                }else{
+                    const screenshot=image.toDataURL()
+                    resolve({
+                        title,
+                        screenshot,
+                        url
+                    })
+                }
+                win.close()
             } catch (e) {
-                reject()
+                reject(e)
             }
         })
     })
