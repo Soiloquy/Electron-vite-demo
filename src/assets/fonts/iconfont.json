@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "723314",
+      "name": "图片列表",
+      "font_class": "ai-img-list",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "7204913",
+      "name": "Web",
+      "font_class": "Web",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    }
+  ]
+}

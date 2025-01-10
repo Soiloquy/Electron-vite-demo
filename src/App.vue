@@ -1,11 +1,10 @@
 <template>
-  <div>
+    <HeaderBar></HeaderBar>
     <router-view></router-view>
-  </div>
 </template>
 
 <script setup lang="ts">
-  
+import HeaderBar from './views/Header/HeaderBar.vue'
 </script>
 
 <style scoped>
