@@ -32,9 +32,10 @@
                     </template>
                 </el-popconfirm>
             </div>
-
         </div>
     </el-card>
+
+    <Mask  :show="loading"></Mask>
 </template>
 
 <script setup lang="ts">
@@ -43,9 +44,12 @@ import {Delete,InfoFilled } from '@element-plus/icons-vue'
 import useWebsiteStore from '@/store/websiteStore.ts'
 import { ElMessage } from 'element-plus';
 
+import Mask from '@/components/Mask.vue';
+
 const websiteStore=useWebsiteStore()
 
 const clicked = ref(false)
+const loading=ref(false)
 
 const {keyWords}=inject('itemTitleSearch') as any
 
@@ -58,13 +62,22 @@ const confirm=(url:string)=>{
 }
 
 const handleItemClick=async(value:any)=>{
+    loading.value=true
     // @ts-ignore
     let result=await handleUrl.openUrl(value.url)
-    ElMessage({
-        message:result.msg,
-        type:'success'
-    })
-    
+    if (result.code) {
+        ElMessage({
+            message:result.msg,
+            type:'error'
+        })
+        loading.value=false
+    }else{
+        ElMessage({
+            message:result.msg,
+            type:'success'
+        })
+        loading.value=false
+    }
 }
 
 onMounted(()=>{
