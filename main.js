@@ -7,7 +7,10 @@ require('./controller/openNewBrowser.js')
 
 const winState=new WinState({
   defaultHeight:600,
-  defaultWidth:800
+  defaultWidth:800,
+  electronStoreOptions:{
+    name:'window-state-main'
+  }
 })
 
 // 注册特殊协议
