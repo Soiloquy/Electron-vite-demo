@@ -14,7 +14,34 @@ const openUrl=async(value)=>{
     return result
 }
 
+const getImg=async()=>{
+    let result=await ipcRenderer.invoke('on-getImgFile-event')
+    return result
+}
+
+// 打開dialog
+const openDialog=()=>{
+    ipcRenderer.send('on-opendialog-event')
+}
+
+const newLink=()=>{
+    return new Promise((resolve,reject)=>{
+        ipcRenderer.on('on-newlink-event',(e,msg)=>{
+            resolve(msg)
+        })
+    })
+}
+
 contextBridge.exposeInMainWorld('handleUrl',{
     sendUrl,
     openUrl
+})
+
+contextBridge.exposeInMainWorld('imageHandle',{
+    getImg
+})
+
+contextBridge.exposeInMainWorld('menuHandle',{
+    openDialog,
+    newLink
 })

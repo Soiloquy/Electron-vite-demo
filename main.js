@@ -4,6 +4,8 @@ const WinState=require('electron-win-state').default
 
 require('./controller/getSource.js')
 require('./controller/openNewBrowser.js')
+require('./controller/getImgFile.js')
+require('./controller/Menu.js')
 
 const winState=new WinState({
   defaultHeight:600,
