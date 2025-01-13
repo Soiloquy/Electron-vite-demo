@@ -26,6 +26,9 @@ const openBrowser=async(url)=>{
             });
             sideWin.loadURL(url)
             winState.manage(sideWin)
+
+            // sideWin.maximize()
+            // sideWin.webContents.openDevTools()
             // 定時器，超時直接返回錯誤並關閉窗口
             let timer
             timer=setTimeout(()=>{
@@ -39,13 +42,12 @@ const openBrowser=async(url)=>{
             sideWin.on('ready-to-show',()=>{
                 clearTimeout(timer)
                 sideWin.show()
-                sideWin.maximize()
                 resolve({
                     msg:"加載成功"
                 })
             })
             sideWin.webContents.once('did-finish-load',()=>{
-                
+
             })
 
             // 增加右鍵菜單
