@@ -8,10 +8,11 @@
 </template>
 
 <script setup lang="ts">
-import {ref,inject} from 'vue'
+import {ref,inject,onMounted,watch} from 'vue'
 import _ from 'lodash'
 
 let inputValue=ref("")
+let MenuOpenDialog=ref("")
 const {changeDialogStatus}=inject('dialogShow') as any
 const {searchKeyWords}=inject('itemTitleSearch') as any
 
@@ -21,6 +22,22 @@ const showDialog=()=>{
 
 const searchItem =_.debounce((e)=>{searchKeyWords(e.target.value)},500)
 
+onMounted(async()=>{
+    // @ts-ignore
+    menuHandle.openDialog()
+    // @ts-ignore
+    MenuOpenDialog.value= await menuHandle.newLink()
+})
+
+watch(MenuOpenDialog,async(action)=>{
+    if (action) {
+        showDialog()
+        // 重置變量和事件，從而多次觸發
+        MenuOpenDialog.value=""
+        // @ts-ignore
+        MenuOpenDialog.value= await menuHandle.newLink()
+    }
+})
 </script>
 
 <style lang="scss" scoped>
